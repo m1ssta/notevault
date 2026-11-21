@@ -1,0 +1,22 @@
+:root{--ink:#1d2433;--paper:#f6f4ee;--line:#d9d4c6;--accent:#1f4e79;--danger:#9b2c2c;--mute:#5d6678}
+@media (prefers-color-scheme:dark){:root{--ink:#e8e6df;--paper:#16191f;--line:#2e333d;--accent:#7fb0e0;--danger:#e08a8a;--mute:#9aa3b5}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 Georgia,"Iowan Old Style",serif;max-width:60rem;margin-inline:auto;padding:1.5rem}
+h1{font-size:1.6rem;margin:0}
+.tag,.hint{color:var(--mute);font-size:.9rem;margin:.25rem 0 1rem}
+label{display:block;margin-bottom:.75rem;font-size:.95rem}
+input,textarea{width:100%;font:inherit;color:inherit;background:transparent;border:1px solid var(--line);border-radius:4px;padding:.5rem}
+textarea{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95rem}
+button{font:inherit;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--paper);border-radius:4px;padding:.45rem .9rem}
+button.ghost{background:transparent;color:var(--accent)}
+button.danger{background:transparent;color:var(--danger);border-color:var(--danger)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
+#auth{max-width:24rem}
+#app:not([hidden]){display:grid;grid-template-columns:15rem 1fr;gap:1.5rem}
+@media (max-width:640px){#app:not([hidden]){grid-template-columns:1fr}}
+aside ul{list-style:none;padding:0;margin:1rem 0}
+aside li button{width:100%;text-align:left;background:transparent;color:var(--ink);border-color:var(--line);margin-bottom:.35rem}
+aside li button[aria-current="true"]{border-color:var(--accent)}
+.account{display:flex;flex-direction:column;gap:.4rem}
+[role=status]{min-height:1.4em;color:var(--mute);font-size:.9rem}

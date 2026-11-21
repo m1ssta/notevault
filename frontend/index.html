@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NoteVault</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>NoteVault</h1>
+    <p class="tag">Notes are encrypted in your browser. The server only ever sees ciphertext.</p>
+  </header>
+
+  <main>
+    <section id="auth">
+      <form id="auth-form" autocomplete="on">
+        <label>Email <input id="email" type="email" autocomplete="username" required></label>
+        <label>Password <input id="password" type="password" autocomplete="current-password" minlength="12" required></label>
+        <p class="hint">If you forget this password, your notes cannot be recovered.</p>
+        <div class="row">
+          <button type="submit" id="login">Sign in</button>
+          <button type="button" id="register" class="ghost">Create account</button>
+        </div>
+        <p id="auth-msg" role="status"></p>
+      </form>
+    </section>
+
+    <section id="app" hidden>
+      <aside>
+        <button id="new" type="button">New note</button>
+        <ul id="list"></ul>
+        <div class="account">
+          <button id="export" type="button" class="ghost">Export my data</button>
+          <button id="delete-account" type="button" class="danger">Delete account</button>
+          <button id="logout" type="button" class="ghost">Sign out</button>
+        </div>
+      </aside>
+      <article>
+        <textarea id="text" rows="16" aria-label="Note text" placeholder="Write something private"></textarea>
+        <div class="row">
+          <button id="save" type="button">Save note</button>
+          <button id="remove" type="button" class="danger" hidden>Delete note</button>
+        </div>
+        <p id="msg" role="status"></p>
+      </article>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

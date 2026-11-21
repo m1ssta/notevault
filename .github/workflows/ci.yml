@@ -1,0 +1,24 @@
+name: ci
+on: [push, pull_request]
+permissions: { contents: read }
+jobs:
+  test-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r backend/requirements.txt pip-audit bandit cyclonedx-bom
+      - name: Security tests (SR-1..SR-10, PR-2)
+        run: python -m pytest backend/tests -q
+      - name: Dependency audit, fails on known vulnerabilities (SR-10)
+        run: pip-audit -r backend/requirements.txt
+      - name: SAST
+        run: bandit -r backend/app -ll
+      - name: SBOM (CycloneDX)
+        run: cyclonedx-py requirements backend/requirements.txt -o sbom.cdx.json
+      - uses: actions/upload-artifact@v4
+        with: { name: sbom, path: sbom.cdx.json }
+      - name: Container scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with: { scan-type: fs, scan-ref: ., severity: "HIGH,CRITICAL", exit-code: "1" }
