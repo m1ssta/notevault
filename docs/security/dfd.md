@@ -1,5 +1,5 @@
 # Data flow diagram (level 1)
-
+![DFD](dfd.png)
 ```mermaid
 flowchart LR
   subgraph TB1["Internet / browser"]
@@ -44,3 +44,4 @@ flowchart LR
 Trust boundaries: TB1 internet/browser | perimeter, TB2 perimeter | application network, TB3 application | data layer,
 TB4 system | third-party SMTP, TB5 data layer | external backup storage.
 Secure-by-design annotations: see `assets-and-gaps.md`.
+

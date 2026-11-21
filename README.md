@@ -5,7 +5,7 @@ requirements, misuse cases, privacy, DFD and traceability live in `docs/security
 
 ## Run the tests
 ```bash
-pip install -r backend/requirements.txt
+python -m venv .venv && source .venv/bin/activate
 python -m pytest backend/tests -q
 ```
 
@@ -14,7 +14,7 @@ python -m pytest backend/tests -q
 cp .env.example .env     # set DB_PASSWORD and JWT_SECRET
 docker compose up --build
 # open https://localhost  (Caddy issues a local certificate)
-sudo docker compose exec db psql -U notevault -f - < deploy/harden.sql   # once, makes audit_log append-only
+docker compose exec db psql -U notevault -f - < deploy/harden.sql   # once, makes audit_log append-only
 ```
 
 ## Layout
