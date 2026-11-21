@@ -6,14 +6,23 @@ services:
       POSTGRES_USER: notevault
       POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
     volumes: [dbdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U notevault -d notevault"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
     networks: [data]          # not published to the host: TB3
   app:
     build: { context: ., dockerfile: backend/Dockerfile }
     environment:
       DATABASE_URL: postgresql+psycopg://notevault:${DB_PASSWORD}@db:5432/notevault
       NOTEVAULT_JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET (>=32 chars) in .env}
-    depends_on: [db]
+    depends_on:
+      db: { condition: service_healthy }
+    restart: unless-stopped
     read_only: true
+    tmpfs: [/tmp]
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [data, web]
@@ -23,6 +32,7 @@ services:
     environment: { DOMAIN: "${DOMAIN:-localhost}" }
     volumes: ["./deploy/Caddyfile:/etc/caddy/Caddyfile:ro", "caddy:/data"]
     depends_on: [app]
+    restart: unless-stopped
     networks: [web]
 networks:
   data: { internal: true }
